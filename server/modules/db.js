@@ -3,6 +3,7 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 const initDatabase = async (vars) => {
     const { DB_USER, DB_PASSWORD, DB_ADDRESS, DB_CLUSTER } = vars;
     const uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_ADDRESS}/?appName=${DB_CLUSTER}`;
+    
     let client = null;
     try {
         client = new MongoClient(uri, {
@@ -15,6 +16,7 @@ const initDatabase = async (vars) => {
         await client.connect();
         console.warn(`Connected to the ${DB_CLUSTER} cluster`);
         return client;
+        
     }
     catch (e) {
         console.error(`${ e }`);
@@ -40,6 +42,23 @@ const deleteCollection = (client, database, collection) => {
 const deleteDatabase = (client, database) => {
     return client.db(database).dropDatabase();
 }
+const findDocument = (client, database, collection, criteria, projection = { _id: 0 }) => {
+    return client.db(database).collection(collection).findOne(criteria, { projection });
+}
+const findDocuments = (client, database, collection, criteria, projection = { _id: 0 }) => {
+    return client.db(database).collection(collection).find(criteria, { projection }).toArray();
+}
+
+// for update
+
+const updateDocument = (client, database,collection,filter,update)=>
+{
+    return client.db(database).collection(collection).updateOne(filter,{ $set:update});
+}
+const updateDocuments = (client, database, collection, filter, update) => {
+    return client.db(database).collection(collection).updateMany(filter, { $set: update });
+};
+
 
 export {
     initDatabase,
@@ -47,5 +66,9 @@ export {
     insertDocuments,
     deleteDocument,
     deleteCollection,
-    deleteDatabase
+    deleteDatabase,
+    findDocument,
+    findDocuments,
+    updateDocument,
+    updateDocuments
 };

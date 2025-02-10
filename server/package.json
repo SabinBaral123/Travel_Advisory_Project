@@ -4,13 +4,16 @@
   "description": "Casestudy 1 -server",
   "main": "server.js",
   "scripts": {
-    "server": "node server.js"
+    "server": "node server.js",
+    "refresh": "node server.js --refresh",
+    "watch": "node --watch server.js"
   },
   "author": "Sabin",
   "license": "ISC",
   "type": "module",
   "dependencies": {
     "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "mongo": "^0.1.0",
     "node": "^18.20.6"
   }
