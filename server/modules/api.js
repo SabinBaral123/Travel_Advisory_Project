@@ -1,7 +1,7 @@
 import * as db from "./db.js";
 import express from "express";
 import cors from "cors";
-
+import { refreshDatabase } from "./setup.js";
 const app = express();
 app.use(express.json());
 app.use(express.static('public'));
@@ -20,6 +20,10 @@ app.use((req, _res, next) => {
 
 const configure = (client, vars) => {
     const { DB_NAME } = vars;
+
+    app.get("/api/refresh", async (request, response) => {
+        console.log("Hello")
+    });
 
     app.get('/api/users', async (request, response) => {
         try {
