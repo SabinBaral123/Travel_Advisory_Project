@@ -21,8 +21,14 @@ app.use((req, _res, next) => {
 const configure = (client, vars) => {
     const { DB_NAME } = vars;
 
-    app.get("/api/refresh", async (request, response) => {
-        console.log("Hello")
+    app.put('/api/refresh', async (request, response) => {
+        try {
+            await refreshDatabase(client, vars);  
+            response.status(200).send({ message: "Database refreshed successfully" });
+        } catch (error) {
+            console.error("Error refreshing database:", error);
+            response.status(500).send({ error: "Failed to refresh database", details: error.message });
+        }
     });
 
     app.get('/api/users', async (request, response) => {
