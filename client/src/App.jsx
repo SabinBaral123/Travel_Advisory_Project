@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Snackbar } from "@mui/material";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
 import Home from "./components/Home.jsx";
-// New import
 import Header from "./components/Header.jsx";
+import Users from "./components/Users.jsx";
 function App() {
   // Alert function
   const [snackbar, setSnackbar] = useState({
@@ -21,17 +22,27 @@ function App() {
   };
   return (
     <>
-      {/* Passing alert={alert} function through the prop */}
-      <Header alert={alert} />
-      <Home alert={alert} />
+      {/* BrowserRouter controls the routing logic */}
+      <BrowserRouter>
+        {/* Passing alert={alert} function through the prop */}
+        <Header alert={alert} />
 
-      <Snackbar
-        open={snackbar.open}
-        autoHideDuration={5000}
-        // Clear the snackbar state on close
-        onClose={() => setSnackbar({ open: false, message: "" })}
-        message={snackbar.message}
-      />
+        {/* Route elements can only be added inside of a Routes element */}
+        <Routes>
+          {/* if we go to http://localhost:5173 it's implicitly http://localhost:5173/ and we go here */}
+          <Route path="/" element={<Home alert={alert} />} />
+          {/* if we go to http://localhost:5173/users we go here */}
+          <Route path="/users" element={<Users alert={alert}></Users>} />{" "}
+        </Routes>
+
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={5000}
+          // Clear the snackbar state on close
+          onClose={() => setSnackbar({ open: false, message: "" })}
+          message={snackbar.message}
+        />
+      </BrowserRouter>
     </>
   );
 }

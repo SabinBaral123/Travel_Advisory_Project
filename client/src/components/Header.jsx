@@ -56,6 +56,7 @@ const Header = (props) => {
                 onClose={() => setMenuAnchorElement(null)}
             >
                 <MenuItem onClick={refreshDatabase}>Refresh Database</MenuItem>
+                <MenuItem>Users</MenuItem>
             </Menu>
        
     </>);
