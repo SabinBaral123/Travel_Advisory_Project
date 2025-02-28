@@ -9,6 +9,7 @@ import {
     Button,
     
 } from "@mui/material";
+import * as api from "../../util/api.js";
 
 const Home = (props) => {
 
@@ -17,8 +18,8 @@ const Home = (props) => {
 
     const findName = async email => {
         try {
-            let response = await fetch(`http://localhost:9000/api/users?email=${email}`);
-            let result = await response.json();
+           // let response = await fetch(`http://localhost:9000/api/users?email=${email}`);
+            let result = await api.users.getquery({email:inputText})
             console.log(result);
             if (result.length > 1) {
                  props.alert (`${result.length} users found`);

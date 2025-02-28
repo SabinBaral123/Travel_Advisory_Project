@@ -8,15 +8,15 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import * as api from "../../util/api.js";
 
 const Header = (props) => {
   const [menuAnchorElement, setMenuAnchorElement] = useState(null);
 
   const refreshDatabase = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/api/refresh`, {
-        method: "PUT",
-      });
+      const response = await api.util.refreshDatabase();
+     
 
       if (!response.ok) {
         throw new Error("Failed to refresh database");

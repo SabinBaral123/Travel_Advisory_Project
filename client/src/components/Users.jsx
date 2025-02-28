@@ -75,14 +75,8 @@ const Users = (props) => {
 
   const onDelete = async () => {
     try {
-      let response = await fetch(`http://localhost:9000/api/users/${selectedUser.email}`, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json', // Fixed content type
-          'Content-Type': 'application/json'
-        }
-      });
-      let result = await response.json();
+    
+      let result = await api.users.delete(selectedUser);
       console.log("Delete result:", result);
 
       if (result.deletedCount > 0) {
@@ -110,15 +104,8 @@ const Users = (props) => {
       }
 
       // Submit the update
-      let response = await fetch(`http://localhost:9000/api/users/${selectedUser.email}`, {
-        method: 'PUT',
-        headers: {
-          'Accept': 'application/json', // Fixed content type
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      let result = await response.json();
+
+      let result = await api.users.update(selectedUser);
       console.log("Update result:", result);
 
       if (result.modifiedCount > 0) {
@@ -175,21 +162,10 @@ const Users = (props) => {
       
       console.log("Creating user with data:", formData);
       
-      let response = await fetch(`http://localhost:9000/api/users`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json', // Fixed content type
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      let result = await api.users.create(formData);
       
-      // Check if the response is ok before parsing
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
       
-      let result = await response.json();
+      
       console.log("Create result:", result);
 
       // Check for success based on different possible API responses
