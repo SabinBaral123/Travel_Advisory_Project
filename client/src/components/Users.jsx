@@ -13,6 +13,7 @@ import {
   Fab
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import * as api from "../../util/api.js";
 
 const Users = (props) => {
   const [users, setUsers] = useState([]);
@@ -27,8 +28,8 @@ const Users = (props) => {
   const loadUsers = async () => {
     try {
       
-      let response = await fetch(`http://localhost:9000/api/users`);
-      let result = await response.json();
+      let result = await api.users.getAll();
+
       console.log("Loaded users:", result);
       setUsers(result);
     
