@@ -4,7 +4,6 @@ import cors from "cors";
 import { refreshDatabase } from "./setup.js";
 const app = express();
 app.use(express.json());
-app.use(express.static('public'));
 
 // Approves requests from anywhere 
 app.use(cors()); 
@@ -137,6 +136,10 @@ const configure = (client, vars) => {
             response.send([]);
         }
     });
+    app.use(express.static('public'));
+
+// Handles Client-Side Routing Requests
+app.use((_request, response) => response.sendFile("index.html", { root: "public" }));
 }
 
 const startServer = (PORT) => app.listen(PORT, console.warn(`Listening on port ${PORT}`));
