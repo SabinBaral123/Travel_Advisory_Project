@@ -8,10 +8,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router-dom";
 import * as api from "../../util/api.js";
 
 const Header = (props) => {
   const [menuAnchorElement, setMenuAnchorElement] = useState(null);
+  const navigate = useNavigate();
 
   const refreshDatabase = async () => {
     try {
@@ -53,9 +55,9 @@ const Header = (props) => {
         open={Boolean(menuAnchorElement)}
         onClose={() => setMenuAnchorElement(null)}
       >
-        <MenuItem>Home</MenuItem>
+       <MenuItem onClick={() => { navigate("/"); setMenuAnchorElement(null); }}>Home</MenuItem>
         <MenuItem onClick={refreshDatabase}>Refresh Database</MenuItem>
-        <MenuItem >Users</MenuItem>
+        <MenuItem onClick={() => { navigate("/users"); setMenuAnchorElement(null); }}>Users</MenuItem>
       </Menu>
     </>
   );
