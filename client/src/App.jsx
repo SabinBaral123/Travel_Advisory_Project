@@ -9,12 +9,12 @@ import Header from "./components/Header.jsx";
 import Users from "./components/Users.jsx";
 
 import { createTheme, ThemeProvider } from "@mui/material";
-import { deepOrange, deepPurple } from "@mui/material/colors";
+import { deepOrange, deepPurple, red } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
       primary: {
-          main: deepOrange[500] // Example Color-Hue: pick another one
+          main: red[800] // Example Color-Hue: pick another one
       }
   }
 });
