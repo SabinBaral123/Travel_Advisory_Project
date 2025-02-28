@@ -104,6 +104,39 @@ const configure = (client, vars) => {
         }
     });
     
+
+    //API for the alert feature 
+    app.get('/api/alerts', async (request, response) => {
+        let projection = {
+            _id: 0,  // mongodb automatically assume to include id so we are explicitly askin to not include it
+                       // , 1 means include and 0 means not
+            country_code: 1,
+            country_name: 1
+        };
+
+        try {
+            let result = await db.findDocuments(client, DB_NAME, 'alerts', {}, projection);
+            response.send(result);
+        }
+        catch (e) {
+            console.error(e);
+            console.log(`${e}`);
+            response.send([]);
+        }
+
+    });
+    app.get('/api/alerts/:country_code', async (request, response) => {
+        const { country_code } = request.params;
+        try {
+            let result = await db.findDocument(client, DB_NAME, 'alerts', { country_code });
+            response.send(result);
+        }
+        catch (e) {
+            console.error(e);
+            console.log(`${e}`);
+            response.send([]);
+        }
+    });
 }
 
 const startServer = (PORT) => app.listen(PORT, console.warn(`Listening on port ${PORT}`));
