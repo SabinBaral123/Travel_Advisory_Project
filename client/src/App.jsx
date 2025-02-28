@@ -7,6 +7,17 @@ import "./App.css";
 import Home from "./components/Home.jsx";
 import Header from "./components/Header.jsx";
 import Users from "./components/Users.jsx";
+
+import { createTheme, ThemeProvider } from "@mui/material";
+import { deepOrange, deepPurple } from "@mui/material/colors";
+
+const theme = createTheme({
+  palette: {
+      primary: {
+          main: deepOrange[500] // Example Color-Hue: pick another one
+      }
+  }
+});
 function App() {
   // Alert function
   const [snackbar, setSnackbar] = useState({
@@ -22,6 +33,7 @@ function App() {
   };
   return (
     <>
+    <ThemeProvider theme={theme}>
       {/* BrowserRouter controls the routing logic */}
       <BrowserRouter>
         {/* Passing alert={alert} function through the prop */}
@@ -43,6 +55,7 @@ function App() {
           message={snackbar.message}
         />
       </BrowserRouter>
+      </ThemeProvider>
     </>
   );
 }
