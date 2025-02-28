@@ -74,10 +74,17 @@ const util =
 {
     refreshDatabase:()=> put(server("/api/refresh"))
 }
+
+const alerts =
+{
+    getSearchData:() => get(server("/api/alerts")),
+    getDetails: country_code => get(server(`/api/alerts/${country_code}`)),
+}
 export {
     get,
     post,
     del,
     util,
-    users
+    users,
+    alerts,
 }
