@@ -136,6 +136,41 @@ const configure = (client, vars) => {
             response.send([]);
         }
     });
+
+    //API for Bookmark Feature 
+    app.get("/api/bookmarks", async (req, res) => {
+        try {
+            const bookmarks = await db.findDocuments(client, DB_NAME, "bookmarks", {});
+            res.json(bookmarks);
+        } catch (e) {
+            console.error(e);
+            res.status(500).json({ message: "Failed to fetch bookmarks" });
+        }
+    });
+    app.post("/api/bookmarks", async (req, res) => {
+        const { alertId, countryName, advisory } = req.body;
+        try {
+            const result = await db.insertDocument(client, DB_NAME, "bookmarks", {
+                alertId, countryName, advisory, createdAt: new Date(),
+            });
+            res.status(201).json(result);  // Respond with the inserted document
+        } catch (e) {
+            console.error("Error inserting bookmark:", e);
+            res.status(500).json({ message: "Failed to insert bookmark" });
+        }
+    });
+
+    app.delete("/api/bookmarks/:country_code", async (req, res) => {
+        try {
+            const { country_code } = req.params;
+            await db.deleteDocument(client, DB_NAME, "bookmarks", { country_code });
+            res.json({ message: "Bookmark removed!" });
+        } catch (e) {
+            console.error(e);
+            res.status(500).json({ message: "Failed to remove bookmark" });
+        }
+    });
+    
     app.use(express.static('public'));
 
 // Handles Client-Side Routing Requests
