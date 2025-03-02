@@ -16,10 +16,18 @@ const server = (endpoint) => {
     return `${serverUrl}${endpoint}`; // Build the rest of the url
 }
 const get = async (url, responseFormat = "json") => {
-    let response = await fetch(url);
-    let result = await response[responseFormat](); // "dynamic" function call
-    return result;
-}
+    try {
+        let response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        let result = await response[responseFormat]();
+        return result;
+    } catch (error) {
+        console.error("Error fetching data: ", error);
+        return [];  // Return an empty array or error message if needed
+    }
+};
 
 const headers = {
     // https://www.rfc-editor.org/rfc/rfc7231#section-5.3.2
@@ -79,6 +87,14 @@ const alerts =
 {
     getSearchData:() => get(server("/api/alerts")),
     getDetails: country_code => get(server(`/api/alerts/${country_code}`)),
+
+}
+
+const bookmarks =
+{
+    getBookmark: ()=>get(server("/api/bookmarks")),
+    createBookmark: (alertData) => post(server("/api/bookmarks"), alertData),
+    deleteBookmark: (country_code) => del(server(`/api/bookmarks/${country_code}`))
 }
 export {
     get,
@@ -87,4 +103,5 @@ export {
     util,
     users,
     alerts,
+    bookmarks,
 }

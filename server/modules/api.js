@@ -140,6 +140,7 @@ const configure = (client, vars) => {
     //API for Bookmark Feature 
     app.get("/api/bookmarks", async (req, res) => {
         try {
+            
             const bookmarks = await db.findDocuments(client, DB_NAME, "bookmarks", {});
             res.json(bookmarks);
         } catch (e) {
@@ -148,11 +149,8 @@ const configure = (client, vars) => {
         }
     });
     app.post("/api/bookmarks", async (req, res) => {
-        const { alertId, countryName, advisory } = req.body;
         try {
-            const result = await db.insertDocument(client, DB_NAME, "bookmarks", {
-                alertId, countryName, advisory, createdAt: new Date(),
-            });
+            const result = await db.insertDocument(client, DB_NAME, "bookmarks", req.body); 
             res.status(201).json(result);  // Respond with the inserted document
         } catch (e) {
             console.error("Error inserting bookmark:", e);
