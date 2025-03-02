@@ -18,13 +18,9 @@ const Header = (props) => {
   const refreshDatabase = async () => {
     try {
       const response = await api.util.refreshDatabase();
-     
+    
 
-      if (!response.ok) {
-        throw new Error("Failed to refresh database");
-      }
-
-      if (props.alert) {
+      if (response) {
         props.alert("Database refreshed successfully!");
       }
     } catch (error) {
@@ -56,8 +52,10 @@ const Header = (props) => {
         onClose={() => setMenuAnchorElement(null)}
       >
        <MenuItem onClick={() => { navigate("/"); setMenuAnchorElement(null); }}>Home</MenuItem>
-        <MenuItem onClick={refreshDatabase}>Refresh Database</MenuItem>
         <MenuItem onClick={() => { navigate("/users"); setMenuAnchorElement(null); }}>Users</MenuItem>
+        <MenuItem onClick={() => { navigate("/bookmarks"); setMenuAnchorElement(null); }}>Bookmarks</MenuItem>
+        <MenuItem onClick={refreshDatabase}>Refresh Database</MenuItem>
+
       </Menu>
     </>
   );
