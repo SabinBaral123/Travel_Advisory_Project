@@ -3,18 +3,19 @@ import { Snackbar } from "@mui/material";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./App.css";
+import * as api from "../util/api.js";
 
 import Home from "./components/Home.jsx";
 import Header from "./components/Header.jsx";
 import Users from "./components/Users.jsx";
-
+import Bookmark from "./components/Bookmark.jsx";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { deepOrange, deepPurple, red } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 
 const theme = createTheme({
   palette: {
       primary: {
-          main: red[800] // Example Color-Hue: pick another one
+          main: red[800] 
       }
   }
 });
@@ -45,6 +46,8 @@ function App() {
           <Route path="/" element={<Home alert={alert} />} />
           {/* if we go to http://localhost:5173/users we go here */}
           <Route path="/users" element={<Users alert={alert}></Users>} />{" "}
+          <Route path="/bookmarks" element={<Bookmark alert={alert} />} /> 
+
         </Routes>
 
         <Snackbar
