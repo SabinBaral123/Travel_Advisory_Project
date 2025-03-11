@@ -23,7 +23,6 @@ const Bookmark = (props) => {
   const handleDelete = async (country_code) => {
     try {
       await api.bookmarks.deleteBookmark(country_code);
-      props.alert(`${bookmark.country_name} deleted`);
       // Refresh the bookmarks list
       loadBookmarks();
     } catch (error) {

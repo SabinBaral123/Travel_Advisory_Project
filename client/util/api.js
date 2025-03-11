@@ -51,7 +51,6 @@ const del = async (url, body, responseFormat = "json") => {
     let response = await fetch(url, {
         method: 'DELETE',
         headers,
-        body: JSON.stringify(body)
     });
     let result = await response[responseFormat]();
     return result;
@@ -70,12 +69,8 @@ const users = {
     getAll: () => get(server("/api/users")), // matchs the API routing in the server
     create: (userData)=> post(server("/api/users/"),userData),
     delete:user => del(server(`/api/users/${user.email}`)),
-    update:(user) => put(server(`/api/users`),{
-        
-    filter: { email: user.email }, 
-    update: { user },
-    } 
-),
+    update: (updateRequest) => put(server(`/api/users`), updateRequest),
+
      getquery: (user) => get(server(`/api/users?email=${encodeURIComponent(user.email)}`)),
 }
 const util =
